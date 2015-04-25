@@ -1,17 +1,63 @@
 package com.chimpo.easyraport;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 
 public class SourceCode {
 
     File directory;
+    ArrayList< File > picsList = new ArrayList<File>();
 
     SourceCode()
     {
         chooseDirectory();
+        readImages();
+    }
+
+    /**Loads pictures with .BMP, .PNG and .JPG extension into picsList*/
+    public boolean loadPictures() {
+        for(File singleFile : directory.listFiles())
+        {
+            if( singleFile.toString().endsWith("bmp")   ||
+                singleFile.toString().endsWith("png")   ||
+                singleFile.toString().endsWith("jpg")   )
+            {
+                picsList.add(singleFile);
+            }
+        }
+
+        if(picsList.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null,"No pictures in selected folder or wrong extension\n(ONLY BMP,PNG,JPG SUPPORTED)");
+            return false;
+        }
+
+        return true;
+    }
+    /**Sorts pictures by creation date*/
+    public void sortPicsList() throws IOException
+    {
+        Path path1, path2;
+        BasicFileAttributes fileAttributes1, fileAttributes2;
+
+
+    }
+
+    /**Puts all files in folder into list, sorted by date of creation*/
+    public void readImages()
+    {
+        if(loadPictures()) {
+            try {
+                sortPicsList();
+            } catch (IOException e) {
+                System.err.println("sortPicsList ERROR HANDLED");
+            }
+        }
+
     }
 
     /**
