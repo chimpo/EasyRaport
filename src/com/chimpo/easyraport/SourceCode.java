@@ -3,15 +3,18 @@ package com.chimpo.easyraport;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
+import org.openxmlformats.schemas.drawingml.x2006.picture.CTPicture;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.*;
-import java.math.BigInteger;
+
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+
+//TODO implement left/right margin = 1,5cm - available only with .doc ( HWPF)
+//TODO implement blank cell borders - available- lot of copy/paste work;
+//TODO implement picture floating mode( behind text, etc.) - maybe with XWPFPicture(Data) or Paragraph? not sure
 
 public class SourceCode {
 
@@ -26,7 +29,7 @@ public class SourceCode {
     {
         chooseDirectory();
     }
-    /**Writes pictures into table in .doc file*/
+    /** Writes pictures into table in .doc file*/
     public void generateTable()
     {
         if(readImages()) prepareAndWriteToWordTable();
@@ -36,14 +39,13 @@ public class SourceCode {
     {
         try {
             XWPFDocument document= new XWPFDocument();
-            FileOutputStream fos= new FileOutputStream( new File("Raport.doc"));
+            document.createNumbering();
+            FileOutputStream fos= new FileOutputStream( new File("Raport.docx"));
 
             table = document.createTable();
+            table.setWidth(500);
 
-
-            int rows = (picsNumber % 2 == 0) ? picsNumber/2 :picsNumber/2 +1;
-
-
+            int rows = (picsNumber % 2 == 0) ? picsNumber/2 : picsNumber/2 + 1;
             int width= 250, height= 180;
 
             setRowWithPics(true, height,width, new FileInputStream(picsList.get(0)),new FileInputStream(picsList.get(1)));
@@ -83,7 +85,7 @@ public class SourceCode {
         }
     }
 
-    /**Puts all files in folder into list, sorted by date of creation*/
+    /** Puts all files in folder into list, sorted by date of creation*/
     public boolean readImages()
     {
         if(loadPictures())
@@ -105,7 +107,7 @@ public class SourceCode {
         return true;
     }
 
-    /**Loads pictures with .BMP, .PNG and .JPG extension into picsList*/
+    /** Loads pictures with .BMP, .PNG and .JPG extension into picsList*/
     private boolean loadPictures() {
 
         if(directory == null) return false;
@@ -132,7 +134,7 @@ public class SourceCode {
         return true;
     }
 
-    /**Sorts pictures by creation date*/
+    /** Sorts pictures by creation date*/
     private void sortPicsList() throws IOException
     {
         BasicFileAttributes fileAttributes1, fileAttributes2;
@@ -156,8 +158,7 @@ public class SourceCode {
 
     }
 
-    /**
-     * Method enables choosing directory with pictures*/
+    /** Method enables choosing directory with pictures*/
     private void chooseDirectory()
     {
         JOptionPane.showMessageDialog(null,"You have to choose directory with pictures");
