@@ -46,7 +46,7 @@ public class SourceCode {
             table.setWidth(500);
 
             int rows = (picsNumber % 2 == 0) ? picsNumber/2 : picsNumber/2 + 1;
-            System.out.println("Rows= " + rows);
+
             int width= 250, height= 180;
 
             setRowWithPics(true, height,width, new FileInputStream(picsList.get(0)),new FileInputStream(picsList.get(1)));
@@ -147,7 +147,7 @@ public class SourceCode {
             fileAttributes1 = Files.readAttributes(picsList.get(m).toPath(),BasicFileAttributes.class);
              fileAttributes2 = Files.readAttributes(picsList.get(n).toPath(),BasicFileAttributes.class);
 
-             if(fileAttributes1.creationTime().toMillis() < fileAttributes2.creationTime().toMillis())
+             if(fileAttributes1.lastModifiedTime().toMillis() < fileAttributes2.lastModifiedTime().toMillis())
              {
                  File temp= picsList.get(m);
                  picsList.set(m,picsList.get(n));
@@ -155,7 +155,6 @@ public class SourceCode {
              }
          }
         }
-
 
     }
 
