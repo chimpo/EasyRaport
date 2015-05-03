@@ -25,6 +25,8 @@ public class SourceCode {
     XWPFTableRow tableRow;
     XWPFTable table;
 
+    static int textSample=0;
+
     SourceCode()
     {
         chooseDirectory();
@@ -76,13 +78,23 @@ public class SourceCode {
         {
             tableRow= table.getRow(0);
             if(pictureFile1 != null) tableRow.getCell(0).addParagraph().createRun().addPicture(pictureFile1, XWPFDocument.PICTURE_TYPE_BMP, null, Units.toEMU(height), Units.toEMU(width));
+            tableRow.getCell(0).addParagraph().createRun().setText(picsList.get(textSample).getName());
+            ++textSample;
+
             if(pictureFile2 != null) tableRow.addNewTableCell().addParagraph().createRun().addPicture(pictureFile2, XWPFDocument.PICTURE_TYPE_BMP, null, Units.toEMU(height), Units.toEMU(width));
+            tableRow.getCell(1).addParagraph().createRun().setText(picsList.get(textSample).getName());
+            ++textSample;
         }
         else
         {
             tableRow= table.createRow();
             if(pictureFile1 != null) tableRow.getCell(0).addParagraph().createRun().addPicture(pictureFile1, XWPFDocument.PICTURE_TYPE_BMP, null, Units.toEMU(height), Units.toEMU(width));
+            tableRow.getCell(0).addParagraph().createRun().setText(picsList.get(textSample).getName());
+            ++textSample;
+
             if(pictureFile2 != null) tableRow.getCell(1).addParagraph().createRun().addPicture(pictureFile2, XWPFDocument.PICTURE_TYPE_BMP, null, Units.toEMU(height), Units.toEMU(width));
+            tableRow.getCell(1).addParagraph().createRun().setText(picsList.get(textSample).getName());
+            ++textSample;
         }
     }
 
@@ -155,7 +167,6 @@ public class SourceCode {
              }
          }
         }
-
     }
 
     /** Method enables choosing directory with pictures*/
