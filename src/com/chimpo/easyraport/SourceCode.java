@@ -46,11 +46,12 @@ public class SourceCode {
             table.setWidth(500);
 
             int rows = (picsNumber % 2 == 0) ? picsNumber/2 : picsNumber/2 + 1;
+            System.out.println("Rows= " + rows);
             int width= 250, height= 180;
 
             setRowWithPics(true, height,width, new FileInputStream(picsList.get(0)),new FileInputStream(picsList.get(1)));
 
-            for(int i=2; i<rows; i+=2)
+            for(int i=2; i<rows*2; i+=2)
             {
                 setRowWithPics(false, height,width, new FileInputStream(picsList.get(i)), new FileInputStream(picsList.get(i+1)));
             }
