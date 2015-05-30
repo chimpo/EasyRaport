@@ -2,12 +2,12 @@ package com.chimpo.easyraport;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.drawingml.x2006.picture.CTPicture;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 import javax.swing.*;
 import java.io.*;
-
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
@@ -47,7 +47,14 @@ public class SourceCode {
             table = document.createTable();
             table.setWidth(500);
 
-            int rows = (picsNumber % 2 == 0) ? picsNumber/2 : picsNumber/2 + 1;
+            int rows;
+            if(picsNumber % 2 == 0)
+            {
+                rows = picsNumber/2;
+            }else
+            {
+                rows = picsNumber/2 + 1;
+            }
 
             int width= 250, height= 180;
 
